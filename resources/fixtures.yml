@@ -1,0 +1,33 @@
+users:
+  - id: 1
+    username: "daniel"
+
+recipes:
+  - id: 1
+    name: 
+    type: "Allgrain"
+
+hops:
+  - id: 1
+    name: "Cascade"
+    alpha: 10
+    notes: "A very good all-round blah blah..."
+    form: "Pellet"
+  - id: 2
+    name: "Northern brewer"
+    alpha: 9
+    notes: "some note"
+    form: "Leaf"
+
+recipe_hops:
+  - id: 1
+    recipes_id: 1
+    hops_id: 1
+    use: "Boil"
+    time: 60
+  - id: 2
+    recipes_id: 1
+    hops_id: 2
+    use: "Boil"
+    time: 2
+

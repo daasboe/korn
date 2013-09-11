@@ -1,0 +1,2 @@
+(ns korn.core)
+
