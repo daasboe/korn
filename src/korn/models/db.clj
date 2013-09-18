@@ -28,8 +28,11 @@
   (insert recipes (values recipe)))
 
 
-(defn- insert-fixture [t f]
-  (insert t (values (f (parse-string (slurp "./resources/fixtures.yml"))))))
+(defn- insert-fixture [t k]
+  (insert t (values (k (parse-string (slurp "./resources/fixtures.yml"))))))
 
 (defn insert-fixtures []
-  (doseq [t '(users recipes hops recipe_hops)] (insert-fixture t (keyword t))))
+  (insert-fixture users :users)
+  (insert-fixture recipes :recipes)
+  (insert-fixture hops :hops)
+  (insert-fixture recipe_hops :recipe_hops))
