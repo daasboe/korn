@@ -4,7 +4,10 @@ users:
 
 recipes:
   - id: 1
-    name: 
+    name: "My first super-recipe"
+    type: "Allgrain"
+  - id: 2
+    name: "My second super-recipe"
     type: "Allgrain"
 
 hops:

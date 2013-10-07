@@ -36,3 +36,12 @@
   (insert-fixture recipes :recipes)
   (insert-fixture hops :hops)
   (insert-fixture recipe_hops :recipe_hops))
+
+(defn get-recipes []
+  (select recipes))
+          
+(defn get-recipe [id]
+  (let [id-int (read-string id)]
+    (select recipes
+            (where {:id id-int}))))
+          
