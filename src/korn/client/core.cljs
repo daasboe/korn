@@ -1,4 +1,5 @@
 (ns korn.client.core
+  (:use [cljs.reader :only (read-string)])
   (:require [enfocus.core :as ef]
             [enfocus.events :as ev]
             [shoreleave.remotes.http-rpc :refer [remote-callback]])
@@ -20,26 +21,33 @@
   "#home" (ev/listen :click (navigate home-page))
   "#new" (ev/listen :click (navigate new-recipe-page))
   "#about" (ev/listen :click (navigate about-page)))
+  ;".navbar-nav li" (ev/listen :click #(ef/do->
+                                        ;(ef/at ".navbar-nav li" (ef/remove-class "active"))
+                                        ;(ef/at (.-currentTarget %) (ef/add-class "active")))))
 
 ;;;;;;;;;;
 ;; Pages
 (defn home-page []
   (ef/at "#content-pane" (ef/content (ef/html '([:button#testapi {:href "#" :class "button"} "Testapi"] [:table#recipes-table {:style "border:0"} [:tbody]]))))
   (get-recipes)
-  (ef/at "#testapi" (ev/listen :click #(testapi))))
+  (ef/at "#testapi" (ev/listen :click #(testapi)))
+  (update-active-nav "#home"))
 
-(em/defaction about-page []
-  "#content-pane" (ef/content "About-page"))
+(defn about-page []
+  (ef/at "#content-pane" (ef/content "About-page"))
+  (update-active-nav "#about"))
 
 (defn recipe-page "Detailed recipe page" [id]
   (get-recipe id))
 
-(em/defaction new-recipe-page []
-  "#content-pane" (ef/content (new-recipe-template))
-  "#btn-create-recipe" (ev/listen :click #(create-recipe (ef/from "#new-recipe-form" (ef/read-form)))))
+(defn new-recipe-page []
+  (ef/at "#content-pane" (ef/content (new-recipe-template)))
+  (ef/at "#btn-create-recipe" (ev/listen :click #(create-recipe (ef/from "#new-recipe-form" (ef/read-form)))))
+  (update-active-nav "#new"))
+
 
 (defn create-recipe [v]
-  (ef/at "#content-pane" (ef/append (apply str (:name v) ": " (first (seq (:type v)))))))
+  (remote-callback :api/save-recipe [v] #(recipe-page (:id %))))
 
 ;;;;;;;;;;
 ;; Recipes
@@ -75,7 +83,7 @@
 
 (defn list-recipes "list recipes" [rs]
   (do (doseq [r (seq rs)] (add-to-recipes-table r))
-      (ef/at "#recipes-table tbody tr" (ev/listen :click #(recipe-page (ef/from (.-currentTarget %) (ef/get-attr :data-id)))))))
+      (ef/at "#recipes-table tbody tr" (ev/listen :click #(get-recipe (read-string (ef/from (.-currentTarget %) (ef/get-attr :data-id))))))))
 
 ;; Show
 (defn get-recipe [id]
@@ -88,6 +96,11 @@
 
 (defn testapi []
   (remote-callback :api/testapi [] #(add-to-content-pane (str %))))
+
+(defn update-active-nav [id]
+  (ef/at (str id) #(ef/do->
+                    (ef/at ".navbar-nav li" (ef/remove-class "active"))
+                    (ef/at (.-parentNode %) (ef/add-class "active")))))
 
 ;;;;;;;;;;
 ;; Init

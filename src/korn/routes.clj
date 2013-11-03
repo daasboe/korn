@@ -12,7 +12,7 @@
           (include-css "/css/bootstrap.min.css"
                        "/css/custom.css")]
          [:body
-          [:nav {:class "navbar navbar-default", :role "navigation"}
+          [:nav {:class "navbar navbar-inverse", :role "navigation"}
            [:div.navbar-header
             [:button {:type "button", :class "navbar-toggle", :data-toggle "collapse", :data-target ".navbar-top-collapse"}
              [:span {:class "sr-only"} "Toggle navigation"]
@@ -23,10 +23,10 @@
            [:div {:class "collapse navbar-collapse navbar-top-collapse"}
             [:ul {:class "nav navbar-nav"}
              [:li {:class "active"}
-              [:a {:id "home" :class ""} "HOME"]]
+              [:a {:id "home", :class "", :href "#"} "HOME"]]
              [:li
-              [:a {:id "new" :class ""} "NEW"]]
-             [:li [:a {:id "about" :class ""} "ABOUT"]]
+              [:a {:id "new", :class "", :href "#"} "NEW"]]
+             [:li [:a {:id "about", :class "", :href "#"} "ABOUT"]]
              [:li.dropdown
               [:a {:href "#", :class "dropdown-toggle", :data-toggle "dropdown"} "Dropdown"]
               [:ul.dropdown-menu

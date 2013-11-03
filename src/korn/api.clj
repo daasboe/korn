@@ -13,4 +13,7 @@
   
 (defremote get-recipe [id]
   (db/get-recipe id))
+
+(defremote save-recipe [v]
+  (db/save-recipe v))
   

@@ -41,7 +41,5 @@
   (select recipes))
           
 (defn get-recipe [id]
-  (let [id-int (read-string id)]
-    (select recipes
-            (where {:id id-int}))))
-          
+  (select recipes
+          (where {:id id})))
