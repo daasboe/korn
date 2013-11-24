@@ -17,3 +17,9 @@
 (defremote save-recipe [v]
   (db/save-recipe v))
   
+(defremote delete-recipe [id]
+  (db/delete-recipe id))
+  
+(defremote update-recipe [r]
+  (db/update-recipe r))
+  

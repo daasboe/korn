@@ -43,3 +43,12 @@
 (defn get-recipe [id]
   (select recipes
           (where {:id id})))
+
+(defn delete-recipe [id]
+  (delete recipes
+          (where {:id id})))
+
+(defn update-recipe [r]
+  (update recipes
+          (set-fields r)
+          (where {:id (r :id)})))
